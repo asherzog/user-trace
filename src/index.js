@@ -1,3 +1,5 @@
+const Utils = require('./utils')
+
 class UserTrace {
     constructor() {
         this.actions = {}
@@ -5,8 +7,7 @@ class UserTrace {
 
     addAction(serializedEvent) {
         try {
-            // TODO: validte input
-            const event = JSON.parse(serializedEvent)
+            const event = Utils.parsedEvent(serializedEvent)
             const { action, time } = event
             if (this.actions[action]) {
                 this.actions = {
@@ -28,8 +29,7 @@ class UserTrace {
                 }
             }
         } catch (err) {
-            // TODO: Error handling
-            throw new Error('invalid input')
+            throw err
         }
     }
 
