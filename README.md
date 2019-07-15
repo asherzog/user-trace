@@ -31,9 +31,20 @@ This package has not been published to a registry. It can be cloned locally, or,
 npm publish
 ```
 
+### Linting
+This package follows [Standard JS](https://standardjs.com/). Run:
+```shell
+standard
+```
+or 
+```shell
+standard --fix
+```
+
 ### Built With
 - [Mocha](https://mochajs.org/)
 - [Chai](https://www.chaijs.com)
+- [Standard JS](https://standardjs.com/)
 
 ### Authors
 - asherzog19@gmail.com
