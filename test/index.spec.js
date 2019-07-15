@@ -69,6 +69,14 @@ describe('UserTrace Module', () => {
             expect(test).to.deep.equal(expectedTest1)
             expect(test2).to.deep.equal(expectedTest2)
         })
+        it('should throw an error with bad inputs', () => {
+            const test = new UserTrace()
+            expect(() => test.addAction({ action: 'jump', time: 100 })).to.throw(Error, 'Input must be serialized JSON')
+            expect(() => test.addAction(JSON.stringify({ time: 10 }))).to.throw(Error, 'Missing required inputs')
+            expect(() => test.addAction(JSON.stringify({ action: 'jump' }))).to.throw(Error, 'Missing required inputs')
+            expect(() => test.addAction(JSON.stringify({ action: {}, time: 100 }))).to.throw(Error, 'You should have specified if you wanted me to allow other types')
+            expect(() => test.addAction(JSON.stringify({ action: 'jump', time: '100' }))).to.throw(Error, 'You should have specified if you wanted me to allow other types')
+        })
     })
 
     describe('getStats method', () => {
