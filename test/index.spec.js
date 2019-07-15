@@ -72,8 +72,46 @@ describe('UserTrace Module', () => {
     })
 
     describe('getStats method', () => {
-        it('should do something', () => {
-            expect('test').to.equal('test')
+        it('should return an empty serialized json array of stats if no actions taken', () => {
+            const user = new UserTrace()
+            const expected = JSON.stringify([])
+            const test = user.getStats()
+            expect(test).to.equal(expected)
+        })
+        it('should return a serialized json array of stats', () => {
+            const user = new UserTrace()
+            user.addAction(JSON.stringify({ action: 'jump', time: 100 }))
+            const expected = JSON.stringify([{ action: 'jump', avg: 100 }])
+            const test = user.getStats()
+            expect(test).to.equal(expected)
+        })
+        it('should return a serialized json array of stats with multiple actions', () => {
+            const user = new UserTrace()
+            user.addAction(JSON.stringify({ action: 'jump', time: 100 }))
+            user.addAction(JSON.stringify({ action: 'run', time: 75 }))
+            user.addAction(JSON.stringify({ action: 'jump', time: 200 }))
+            const expected = JSON.stringify([
+                { action: 'jump', avg: 150 },
+                { action: 'run', avg: 75 }
+            ])
+            const test = user.getStats()
+            expect(test).to.equal(expected)
+        })
+        it('should return different stats for different UserTraces', () => {
+            const user = new UserTrace()
+            const user2 = new UserTrace()
+            user.addAction(JSON.stringify({ action: 'jump', time: 100 }))
+            user.addAction(JSON.stringify({ action: 'run', time: 75 }))
+            user2.addAction(JSON.stringify({ action: 'jump', time: 200 }))
+            const expected1 = JSON.stringify([
+                { action: 'jump', avg: 100 },
+                { action: 'run', avg: 75 }
+            ])
+            const expected2 = JSON.stringify([{ action: 'jump', avg: 200 }])
+            const test1 = user.getStats()
+            const test2 =  user2.getStats()
+            expect(test1).to.equal(expected1)
+            expect(test2).to.equal(expected2)
         })
     })
 })

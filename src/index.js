@@ -32,6 +32,14 @@ class UserTrace {
             throw new Error('invalid input')
         }
     }
+
+    getStats() {
+        const stats = []
+        for (var action in this.actions) {
+            stats.push({action: this.actions[action].action, avg: this.actions[action].time})
+        }
+        return JSON.stringify(stats)
+    }
 }
 
 module.exports = { UserTrace } 
