@@ -21,7 +21,7 @@
   "homepage": "https://github.com/asherzog/user-trace#readme",
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^6.1.4",
+    "mocha": "^10.2.0",
     "standard": "^13.0.2"
   }
 }
